@@ -1,0 +1,38 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "JavaReactivo"
+  devtools:
+    add-properties: false
+  h2:
+    console:
+      enabled: true
+      path: "/h2"
+  profiles:
+    include: null
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
+
+routes:
+  paths:
+    tasks: "/api/v1/tasks"
+    tasksById: "/api/v1/tasks/{id}"
+
+adapters:
+  r2dbc:
+    host: "localhost"
+    port: 5432
+    database: "test"
+    schema: "public"
+    username: "test"
+    password: "P@55w0rd"
