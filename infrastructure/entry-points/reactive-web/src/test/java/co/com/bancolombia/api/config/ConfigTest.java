@@ -1,10 +1,7 @@
 package co.com.bancolombia.api.config;
 
-import co.com.bancolombia.api.Handler;
 import co.com.bancolombia.api.RouterRest;
 import co.com.bancolombia.model.Priority;
-import co.com.bancolombia.model.Task;
-import co.com.bancolombia.usecase.task.TaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,7 @@ import reactor.core.publisher.Flux;
 
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = {RouterRest.class, Handler.class, TaskPath.class})
+@ContextConfiguration(classes = {RouterRest.class, HandlerTask.class, TaskPath.class})
 @WebFluxTest
 @Import({CorsConfig.class, SecurityHeadersConfig.class})
 class ConfigTest {

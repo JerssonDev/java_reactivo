@@ -1,6 +1,5 @@
 package co.com.bancolombia.config;
 
-import co.com.bancolombia.model.gateways.TaskRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

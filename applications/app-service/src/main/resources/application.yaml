@@ -1,38 +1,61 @@
 server:
   port: 8080
+
 spring:
   application:
     name: "JavaReactivo"
+  r2dbc:
+    url: r2dbc:postgresql://ep-rough-fire-aecwdwd0-pooler.c-2.us-east-2.aws.neon.tech:5432/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_H6Yrtqn2Shbm
+    properties:
+      sslMode: require
+
+  sql:
+    init:
+      platform: postgres
+
   devtools:
     add-properties: false
+
   h2:
     console:
       enabled: true
-      path: "/h2"
-  profiles:
-    include: null
+      path: /h2
+
 management:
   endpoints:
     web:
       exposure:
-        include: "health,prometheus"
+        include: health,prometheus
   endpoint:
     health:
       probes:
         enabled: true
+
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
 
 routes:
   paths:
-    tasks: "/api/v1/tasks"
-    tasksById: "/api/v1/tasks/{id}"
+    users: /api/v1/usuarios
 
 adapters:
+  restconsumer:
+    timeout: 5000
+    url: http://localhost:8080
   r2dbc:
-    host: "localhost"
+    host: ep-rough-fire-aecwdwd0-pooler.c-2.us-east-2.aws.neon.tech
     port: 5432
-    database: "test"
-    schema: "public"
-    username: "test"
-    password: "P@55w0rd"
+    database: neondb
+    schema: public
+    username: neondb_owner
+    password: npg_H6Yrtqn2Shbm
+    options: sslmode=require
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true

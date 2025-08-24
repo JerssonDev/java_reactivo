@@ -1,6 +1,7 @@
 package co.com.bancolombia.api;
 
-import co.com.bancolombia.api.config.TaskPath;
+import co.com.bancolombia.api.config.UserPath;
+import co.com.bancolombia.api.handler.HandlerUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,16 +14,11 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 @RequiredArgsConstructor
 public class RouterRest {
-
-    private final TaskPath taskPath;
-    private final Handler taskHandler;
+    private final UserPath userPath;
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunction(Handler handler) {
-        return route(POST(taskPath.getTasks()), taskHandler::listenSaveTask)
-                .andRoute(PUT(taskPath.getTasks()), taskHandler::listenUpdateTask)
-                .andRoute(DELETE(taskPath.getTasksById()), taskHandler::listenDeleteTask)
-                .andRoute(GET(taskPath.getTasks()), taskHandler::listenGetAllTasks)
-                .andRoute(GET(taskPath.getTasksById()), taskHandler::listenGetTaskById);
+    public RouterFunction<ServerResponse> routerFunction(HandlerUser handlerUser) {
+        return route(POST(userPath.getUsers()),handlerUser::registerUser);
+
     }
 }

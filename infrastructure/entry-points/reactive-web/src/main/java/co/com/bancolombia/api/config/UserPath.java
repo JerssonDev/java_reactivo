@@ -7,8 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "routes.paths")
-public class TaskPath {
-    private String tasks;
-    private String tasksById;
+public class UserPath {
+    private String users;
 }
-

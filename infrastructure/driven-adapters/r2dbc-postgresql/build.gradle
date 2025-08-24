@@ -5,7 +5,10 @@ dependencies {
     implementation 'jakarta.persistence:jakarta.persistence-api' // TODO: Check if it's still necessary
     implementation 'org.postgresql:r2dbc-postgresql'
     implementation 'org.reactivecommons.utils:object-mapper-api:0.1.0'
-
+    implementation 'org.postgresql:postgresql:42.7.3'
     testImplementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
 }
 
