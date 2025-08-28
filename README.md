@@ -130,6 +130,18 @@ Archivo de prueba de carga para Apache JMeter, diseñado para simular múltiples
 3. Configurar los parámetros si es necesario (puerto, número de usuarios, etc.)
 4. Ejecutar la prueba y analizar los resultados
 
+### 📚 Documentación de la API
+
+Este proyecto implementa documentación interactiva de sus endpoints REST utilizando SpringDoc OpenAPI Starter WebFlux UI.
+
+Una vez el proyecto esté en ejecución (./gradlew bootRun o ejecutado desde tu IDE), puedes acceder a la documentación desde:
+
+- Swagger UI: http://localhost:8080/api/doc/swagger-ui/index.htm
+
+- JSON OpenAPI spec: http://localhost:8080/api/doc/api-docs
+
+> (Verifica el puerto si fue cambiado en tu configuración local)
+
 ### 📝 Notas
 
 - Verifica que los puertos usados no estén ocupados.

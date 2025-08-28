@@ -9,11 +9,13 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Repository
 public class TaskRepositoryAdapter extends ReactiveAdapterOperations<
         Task,
         TaskEntity,
-        String,
+        UUID,
         TaskReactiveRepository
 > implements TaskRepository {
     public TaskRepositoryAdapter(TaskReactiveRepository repository, ObjectMapper mapper) {
@@ -30,12 +32,12 @@ public class TaskRepositoryAdapter extends ReactiveAdapterOperations<
     }
 
     @Override
-    public Mono<Task> findById(String id) {
+    public Mono<Task> findById(UUID id) {
         return super.findById(id);
     }
 
     @Override
-    public Mono<Void> deleteById(String id) {
+    public Mono<Void> deleteById(UUID id) {
         return repository.deleteById(id);
     }
 

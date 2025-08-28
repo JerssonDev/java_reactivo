@@ -15,6 +15,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 
+import java.util.UUID;
+
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {RouterRest.class, Handler.class, TaskPath.class})
@@ -28,8 +30,11 @@ class ConfigTest {
     @MockitoBean
     private TaskUseCase taskUseCase;
 
+    private final UUID taskIdOne = UUID.fromString("17c13bcc-5d6d-4670-820b-7df2a0a880a4");
+    private final UUID taskIdTwo = UUID.fromString("a0277c60-bec6-4f62-8ee2-4e60a4f9c2ce");
+
     private final Task taskOne = Task.builder()
-            .id("1")
+            .id(taskIdOne)
             .title("Task 1")
             .description("Description")
             .priority(Priority.LOW)
@@ -37,7 +42,7 @@ class ConfigTest {
             .build();
 
     private final Task taskTwo = Task.builder()
-            .id("2")
+            .id(taskIdTwo)
             .title("Task 2")
             .description("Description")
             .priority(Priority.LOW)

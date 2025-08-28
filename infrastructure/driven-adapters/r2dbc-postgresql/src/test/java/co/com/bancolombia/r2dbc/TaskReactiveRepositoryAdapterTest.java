@@ -3,6 +3,7 @@ package co.com.bancolombia.r2dbc;
 import co.com.bancolombia.model.Priority;
 import co.com.bancolombia.model.Task;
 import co.com.bancolombia.r2dbc.entity.TaskEntity;
+import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,8 @@ import org.reactivecommons.utils.ObjectMapper;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -29,8 +32,10 @@ class TaskReactiveRepositoryAdapterTest {
     @Mock
     ObjectMapper mapper;
 
+    private final UUID taskId = UUID.fromString("17c13bcc-5d6d-4670-820b-7df2a0a880a4");
+
     private final TaskEntity taskEntity = TaskEntity.builder()
-            .id("1")
+            .id(taskId)
             .title("Tarea 1")
             .description("Descripción")
             .priority("LOW")
@@ -38,17 +43,9 @@ class TaskReactiveRepositoryAdapterTest {
             .build();
 
     private final Task task = Task.builder()
-            .id("1")
+            .id(taskId)
             .title("Tarea 1")
             .description("Descripción")
-            .priority(Priority.LOW)
-            .completed(false)
-            .build();
-
-    private final Task otherTask = Task.builder()
-            .id("2")
-            .title("Tarea 12")
-            .description("Descripción 2")
             .priority(Priority.LOW)
             .completed(false)
             .build();
@@ -58,12 +55,12 @@ class TaskReactiveRepositoryAdapterTest {
 
         when(mapper.map(taskEntity, Task.class)).thenReturn(task);
 
-        when(repository.findById("1")).thenReturn(Mono.just(taskEntity));
+        when(repository.findById(taskId)).thenReturn(Mono.just(taskEntity));
 
-        Mono<Task> result = repositoryAdapter.findById("1");
+        Mono<Task> result = repositoryAdapter.findById(taskId);
 
         StepVerifier.create(result)
-                .expectNextMatches(t -> t.getId().equals("1") && t.getTitle().equals("Tarea 1"))
+                .expectNextMatches(t -> t.getId().equals(taskId) && t.getTitle().equals("Tarea 1"))
                 .verifyComplete();
     }
 

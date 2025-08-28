@@ -1,16 +1,15 @@
-package co.com.bancolombia.model;
+package co.com.bancolombia.api.dto;
 
+import co.com.bancolombia.model.Priority;
 import lombok.*;
-
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Task {
-    private UUID id;
+public class UpdateTaskDTO {
+    private String id;
     private String title;
     private String description;
     private Priority priority;

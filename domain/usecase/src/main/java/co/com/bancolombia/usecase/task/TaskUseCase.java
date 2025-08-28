@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 public class TaskUseCase {
 
@@ -23,11 +25,11 @@ public class TaskUseCase {
         return taskRepository.findAll();
     }
 
-    public Mono<Task> getTaskById(String id) {
+    public Mono<Task> getTaskById(UUID id) {
         return taskRepository.findById(id);
     }
 
-    public Mono<Void> deleteTask(String id) {
+    public Mono<Void> deleteTask(UUID id) {
         return taskRepository.deleteById(id);
     }
 }

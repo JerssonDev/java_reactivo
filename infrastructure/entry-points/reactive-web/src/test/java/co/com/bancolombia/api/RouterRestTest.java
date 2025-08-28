@@ -17,6 +17,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -32,11 +34,14 @@ class RouterRestTest {
     @MockitoBean
     private TaskUseCase taskUseCase;
 
+    private final UUID taskIdOne = UUID.fromString("17c13bcc-5d6d-4670-820b-7df2a0a880a4");
+    private final UUID taskIdTwo = UUID.fromString("a0277c60-bec6-4f62-8ee2-4e60a4f9c2ce");
+
     private final String tasks = "/api/v1/tasks";
     private final String tasksById = "/api/v1/tasks";
 
     private final Task taskOne = Task.builder()
-            .id("1")
+            .id(taskIdOne)
             .title("Task 1")
             .description("Description")
             .priority(Priority.LOW)
@@ -44,7 +49,7 @@ class RouterRestTest {
             .build();
 
     private final Task taskTwo = Task.builder()
-            .id("2")
+            .id(taskIdTwo)
             .title("Task 2")
             .description("Description")
             .priority(Priority.LOW)
@@ -74,24 +79,23 @@ class RouterRestTest {
                 .hasSize(2)
                 .value(tasks -> {
                     Assertions.assertThat(tasks).isNotEmpty();
-                    Assertions.assertThat(tasks.get(0).getId()).isEqualTo("1");
+                    Assertions.assertThat(tasks.get(0).getId()).isEqualTo(taskIdOne);
                 });
 
     }
 
     @Test
     void shouldGetTaskById() {
-        String id = "1";
 
-        when(taskUseCase.getTaskById(id)).thenReturn(Mono.just(taskOne));
+        when(taskUseCase.getTaskById(taskIdOne)).thenReturn(Mono.just(taskOne));
 
         webTestClient.get()
-                .uri(tasks + "/" + id)
+                .uri(tasks + "/" + taskIdOne)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Task.class)
-                .value(response -> Assertions.assertThat(response.getId()).isEqualTo(id));
+                .value(response -> Assertions.assertThat(response.getId()).isEqualTo(taskIdOne));
     }
 
     @Test
@@ -112,7 +116,7 @@ class RouterRestTest {
     @Test
     void shouldPutUpdateTask() {
         Task task = Task.builder()
-                .id("1")
+                .id(UUID.fromString("7614045-de96-407b-85cd-001c7a2b695c"))
                 .title("Task 1")
                 .description("Description")
                 .priority(Priority.HIGH)
@@ -133,11 +137,11 @@ class RouterRestTest {
 
     @Test
     void shouldDeleteTask() {
-        String id = "1";
-        when(taskUseCase.deleteTask(id)).thenReturn(Mono.empty());
+
+        when(taskUseCase.deleteTask(taskIdOne)).thenReturn(Mono.empty());
 
         webTestClient.delete()
-                .uri(tasks + "/" + id)
+                .uri(tasks + "/" + taskIdOne)
                 .exchange()
                 .expectStatus().isNoContent();
     }
